@@ -11909,3 +11909,5 @@ var/package/Mage_Downloader-1.7.0.1.xml var/package/Mage_Downloader-1.7.0.1.xml
 var/package/Mage_Locale_en_US-1.7.0.1.xml var/package/Mage_Locale_en_US-1.7.0.1.xml
 var/package/Magento_Mobile-1.7.0.1.22.1.xml var/package/Magento_Mobile-1.7.0.1.22.1.xml
 var/package/Phoenix_Moneybookers-1.3.1.xml var/package/Phoenix_Moneybookers-1.3.1.xml
+app/code/core/Mage/Install/Controller/Router/Install.php app/code/core/Mage/Install/Controller/Router/Install.php
+lib/PEAR/PEAR/PEAR5.php lib/PEAR/PEAR/PEAR5.php
