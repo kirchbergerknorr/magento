@@ -7671,6 +7671,7 @@ downloader/lib/Mage/System/Ftp.php downloader/lib/Mage/System/Ftp.php
 downloader/lib/Mage/Xml/Generator.php downloader/lib/Mage/Xml/Generator.php
 downloader/lib/Mage/Xml/Parser.php downloader/lib/Mage/Xml/Parser.php
 downloader/mage.php downloader/mage.php
+downloader/Maged/.htaccess downloader/Maged/.htaccess
 downloader/skin/boxes.css downloader/skin/boxes.css
 downloader/skin/ie7boxes.css downloader/skin/ie7boxes.css
 downloader/skin/ieboxes.css downloader/skin/ieboxes.css
