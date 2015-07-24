@@ -1,0 +1,13 @@
+{
+    "name": "kirchbergerknorr/magento",
+    "type": "magento-module",
+    "authors": [
+        {"name": "Aleksey Razbakov", "email": "aleksey@razbakov.com"}
+    ],
+    "repositories": [
+        {"type": "composer", "url": "http://packages.firegento.com"}
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
