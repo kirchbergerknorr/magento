@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Archive
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -33,6 +33,21 @@
 */
 class Mage_Archive_Helper_File_Gz extends Mage_Archive_Helper_File
 {
+
+    /**
+     * Overwritten Mage_Archive_Helper_File constructor with zlib extension check
+     * @param string $filePath
+     * @throws Mage_Exception
+     */
+    public function __construct($filePath)
+    {
+        if (!function_exists('gzopen')) {
+            throw new Mage_Exception('PHP Extensions "zlib" must be loaded.');
+        }
+
+        parent::__construct($filePath);
+    }
+
     /**
      * @see Mage_Archive_Helper_File::_open()
      */

@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -29,6 +29,7 @@ namespace Mage\Paypal\Test\Block;
 use Magento\Mtf\Block\Form;
 use Magento\Mtf\Client\Element\SimpleElement as Element;
 use Magento\Mtf\Fixture\FixtureInterface;
+use Magento\Mtf\Client\Locator;
 
 /**
  * Login to Pay Pal account.
@@ -40,7 +41,7 @@ class Login extends Form
      *
      * @var string
      */
-    protected $submitButton = '.loginBtn';
+    protected $submitButton = '#btnLogin';
 
     /**
      * Loader selector.
@@ -50,13 +51,64 @@ class Login extends Form
     protected $loader = '#spinner';
 
     /**
+     * I-frame selector.
+     *
+     * @var string
+     */
+    protected $iFrame = 'iframe';
+
+    /**
+     * I-frame selector.
+     *
+     * @var string
+     */
+    protected $frameBody = 'body';
+
+    /**
      * Click 'Log in to Pay Pal' button.
      *
      * @return void
      */
     public function submit()
     {
-        $this->_rootElement->find($this->submitButton)->click();
+        $rootElement = $this->findRootElement();
+        $rootElement->find($this->submitButton)->click();
+    }
+
+    /**
+     * Find root element for "Log In" button.
+     *
+     * @return \Magento\Mtf\Client\ElementInterface
+     */
+    public function findRootElement()
+    {
+        return $rootElement = ($this->browser->find($this->frameBody)->isVisible())
+            ? $this->browser->find($this->frameBody)
+            : $this->_rootElement;
+    }
+
+    /**
+     * Select window of PayPal Express checkout iFrame, if need.
+     *
+     * @param null $element
+     * @return \Magento\Mtf\Client\ElementInterface|null
+     */
+    public function switchOnPayPalFrame($element = null)
+    {
+        if ($this->browser->find($this->iFrame)->isVisible()) {
+            $this->browser->switchToFrame(new Locator($this->iFrame));
+            $element = $this->browser->find($this->frameBody);
+    }
+
+        return $element;
+    }
+
+    /**
+     * Select window of PayPal Express checkout, if iFrame had been selected
+     */
+    public function switchOffPayPalFrame()
+    {
+            $this->browser->switchToFrame();
     }
 
     /**
@@ -69,6 +121,20 @@ class Login extends Form
     public function fill(FixtureInterface $customer, Element $element = null)
     {
         $this->waitForElementNotVisible($this->loader);
-        return parent::fill($customer, $element);
+        return parent::fill($customer, $this->switchOnPayPalFrame($element));
+    }
+
+    /**
+     * Check is block active
+     *
+     * @return bool
+     */
+    public function isBlockActive()
+    {
+        if ($this->browser->find($this->mapping['password']['selector'])->isVisible()) {
+            return true;
+        }
+
+        return false;
     }
 }

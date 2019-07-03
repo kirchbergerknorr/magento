@@ -21,12 +21,12 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
-    <testCase name="Mage\Paypal\Test\TestCase\CreateShipmentForPaypalExpressCheckoutTest">
+    <testCase name="Mage\Paypal\Test\TestCase\CreateShipmentForPaypalExpressCheckoutTest" summary="CreateShipmentForPaypalExpressCheckoutTest">
         <variation name="CreateShipmentForPaypalExpressCheckoutTestVariation1" method="test">
             <data name="description" xsi:type="string">Create full shipment for paypal express checkout with line items mark require billing address</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
@@ -39,6 +39,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -58,6 +59,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">1</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">1</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -74,6 +76,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -91,6 +94,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Complete</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -108,6 +112,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -125,6 +130,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -142,6 +148,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -160,6 +167,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">6</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">6</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />
@@ -177,6 +185,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">2</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">2</data>
             <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />

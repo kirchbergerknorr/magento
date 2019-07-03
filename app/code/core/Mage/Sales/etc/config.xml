@@ -21,14 +21,14 @@
  *
  * @category    Mage
  * @package     Mage_Sales
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
         <Mage_Sales>
-            <version>1.6.0.9</version>
+            <version>1.6.0.10</version>
         </Mage_Sales>
     </modules>
     <global>
@@ -1218,7 +1218,7 @@
                     </subtotal>
                     <shipping>
                         <class>sales/quote_address_total_shipping</class>
-                        <after>subtotal,freeshipping,tax_subtotal</after>
+                        <after>subtotal,freeshipping,tax_subtotal,msrp</after>
                         <before>grand_total</before>
                     </shipping>
                     <grand_total>
@@ -1227,6 +1227,7 @@
                     </grand_total>
                     <msrp>
                         <class>sales/quote_address_total_msrp</class>
+                        <before>grand_total</before>
                     </msrp>
                 </totals>
                 <nominal_totals>

@@ -21,20 +21,20 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
-    <testCase name="Mage\Authorizenet\Test\TestCase\CreateOfflineInvoiceForAuthorizenetDirectpostMethodTest">
+    <testCase name="Mage\Authorizenet\Test\TestCase\CreateOfflineInvoiceForAuthorizenetDirectpostMethodTest" summary="CreateOfflineInvoiceForAuthorizenetDirectpostMethodTest">
         <variation name="CreateOnlineInvoiceForAuthorizenetDirectpostMethodTestVariation1" method="test">
             <data name="description" xsi:type="string">Create full invoice for authorizenet directpost</data>
             <data name="configData" xsi:type="string">authorizenet_directpost</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">authorizenet_directpost</data>
@@ -47,8 +47,8 @@
             <data name="verifyData/item_price" xsi:type="string">100.00</data>
             <data name="verifyData/item_subtotal" xsi:type="string">300.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">300.00</data>
-            <data name="status" xsi:type="string">Complete</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
+            <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:authorize_net_dp</data>
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceSuccessCreateMessage" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />

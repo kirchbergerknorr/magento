@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -37,8 +37,24 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
 
     protected $_entityTypeId;
 
+    /**
+     * List of tags from setting
+     */
+    const XML_PATH_ALLOWED_TAGS = 'system/catalog/frontend/allowed_html_tags_list';
+
+    /**
+     * Get list of allowed text formatted as array
+     *
+     * @return array
+     */
+    protected function _getAllowedTags()
+    {
+        return explode(',', Mage::getStoreConfig(self::XML_PATH_ALLOWED_TAGS));
+    }
+
     public function preDispatch()
     {
+        $this->_setForcedFormKeyActions('delete');
         parent::preDispatch();
         $this->_entityTypeId = Mage::getModel('eav/entity')->setType(Mage_Catalog_Model_Product::ENTITY)->getTypeId();
     }
@@ -156,6 +172,7 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
             /** @var $helperCatalog Mage_Catalog_Helper_Data */
             $helperCatalog = Mage::helper('catalog');
             //labels
+            $data['frontend_label'] = (array) $data['frontend_label'];
             foreach ($data['frontend_label'] as & $value) {
                 if ($value) {
                     $value = $helperCatalog->stripTags($value);
@@ -163,8 +180,13 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
             }
 
             if (!empty($data['option']) && !empty($data['option']['value']) && is_array($data['option']['value'])) {
+                $allowableTags = isset($data['is_html_allowed_on_front']) && $data['is_html_allowed_on_front']
+                    ? sprintf('<%s>', implode('><', $this->_getAllowedTags())) : null;
                 foreach ($data['option']['value'] as $key => $values) {
-                    $data['option']['value'][$key] = array_map(array($helperCatalog, 'stripTags'), $values);
+                    foreach ($values as $storeId => $storeLabel) {
+                        $data['option']['value'][$key][$storeId]
+                            = $helperCatalog->stripTags($storeLabel, $allowableTags);
+                    }
                 }
             }
         }
@@ -188,10 +210,10 @@ class Mage_Adminhtml_Catalog_Product_AttributeController extends Mage_Adminhtml_
 
             //validate attribute_code
             if (isset($data['attribute_code'])) {
-                $validatorAttrCode = new Zend_Validate_Regex(array('pattern' => '/^[a-z][a-z_0-9]{1,254}$/'));
+                $validatorAttrCode = new Zend_Validate_Regex(array('pattern' => '/^(?!event$)[a-z][a-z_0-9]{1,254}$/'));
                 if (!$validatorAttrCode->isValid($data['attribute_code'])) {
                     $session->addError(
-                        Mage::helper('catalog')->__('Attribute code is invalid. Please use only letters (a-z), numbers (0-9) or underscore(_) in this field, first character should be a letter.')
+                        Mage::helper('catalog')->__('Attribute code is invalid. Please use only letters (a-z), numbers (0-9) or underscore(_) in this field, first character should be a letter. Do not use "event" for an attribute code.')
                     );
                     $this->_redirect('*/*/edit', array('attribute_id' => $id, '_current' => true));
                     return;

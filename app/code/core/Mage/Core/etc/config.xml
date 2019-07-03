@@ -21,14 +21,14 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
         <Mage_Core>
-            <version>1.6.0.6</version>
+            <version>1.6.0.8</version>
         </Mage_Core>
     </modules>
     <global>
@@ -178,6 +178,22 @@
                     </security_domain_policy>
                 </observers>
             </controller_action_predispatch>
+            <model_save_before>
+                <observers>
+                    <secure_var_processing>
+                        <class>core/observer</class>
+                        <method>secureVarProcessing</method>
+                    </secure_var_processing>
+                </observers>
+            </model_save_before>
+            <model_delete_before>
+                <observers>
+                    <secure_var_processing>
+                        <class>core/observer</class>
+                        <method>secureVarProcessing</method>
+                    </secure_var_processing>
+                </observers>
+            </model_delete_before>
         </events>
     </global>
     <frontend>
@@ -415,6 +431,7 @@
                 <use_form_key>1</use_form_key>
                 <domain_policy_backend>2</domain_policy_backend>
                 <domain_policy_frontend>2</domain_policy_frontend>
+                <extensions_compatibility_mode>1</extensions_compatibility_mode>
             </security>
         </admin>
         <general>
@@ -427,8 +444,13 @@
             </locale>
             <file>
                 <protected_extensions>
-                    <!-- PHP script file extension -->
+                    <!-- BOF PHP script file extensions -->
                     <php>php</php>
+                    <php3>php3</php3>
+                    <php4>php4</php4>
+                    <php5>php5</php5>
+                    <php7>php7</php7>
+                    <!-- EOF PHP script file extensions -->
                     <!-- File extension of configuration of an Apache Web server -->
                     <htaccess>htaccess</htaccess>
                     <!-- Java script file extension -->
@@ -446,6 +468,7 @@
                     <!-- BOF HTML file extensions -->
                     <htm>htm</htm>
                     <html>html</html>
+                    <pht>pht</pht>
                     <phtml>phtml</phtml>
                     <shtml>shtml</shtml>
                     <!-- EOF HTML file extensions -->
@@ -455,9 +478,26 @@
                 <public_files_valid_paths>
                     <protected>
                         <app>/app/*/*</app>
+                        <dev>/dev/*/*</dev>
+                        <downloader>/downloader/*/*</downloader>
+                        <errors>/errors/*/*</errors>
+                        <includes>/includes/*/*</includes>
+                        <js>/js/*/*</js>
+                        <lib>/lib/*/*</lib>
+                        <shell>/shell/*/*</shell>
+                        <skin>/skin/*/*</skin>
                     </protected>
                 </public_files_valid_paths>
             </file>
+            <!-- NOTE: If you turn off images reprocessing, then your upload images process may cause security risks. -->
+            <reprocess_images>
+                <active>1</active>
+            </reprocess_images>
+            <!-- Additional email for notifications -->
+            <additional_notification_emails>
+                <!-- On creating a new admin user. You can specify several emails separated by commas. -->
+                <admin_user_create></admin_user_create>
+            </additional_notification_emails>
         </general>
     </default>
     <stores>

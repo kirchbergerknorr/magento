@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -66,28 +66,11 @@ class UseAclRoleWithRestrictedGwsScopeTest extends Injectable
     protected $userEditPage;
 
     /**
-     * Store groups fixture.
-     *
-     * @var StoreGroup[]
-     */
-    protected $storeGroups;
-
-    /**
      * Factory of fixtures.
      *
      * @var FixtureFactory
      */
     protected $fixtureFactory;
-
-    /**
-     * Skipping test according to bug.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $this->markTestIncomplete("Bug: MPERF-7606: Store name can't be found in 'Purchased From (Store)' filter.");
-    }
 
     /**
      * Preconditions for test.
@@ -98,12 +81,11 @@ class UseAclRoleWithRestrictedGwsScopeTest extends Injectable
     public function __prepare(FixtureFactory $fixtureFactory)
     {
         /** @var Role $role */
-        $role = $fixtureFactory->createByCode('role', ['dataSet' => 'custom_with_gws_scope']);
+        $role = $fixtureFactory->createByCode('role', ['dataset' => 'custom_with_gws_scope']);
         $role->persist();
-        $user = $fixtureFactory->createByCode('user', ['dataSet' => 'admin_without_role']);
+        $user = $fixtureFactory->createByCode('user', ['dataset' => 'admin_without_role']);
         $user->persist();
 
-        $this->storeGroups = $role->getDataFieldConfig('gws_store_groups')['source']->getStoreGroups();
         $this->fixtureFactory = $fixtureFactory;
 
         return ['user' => $user, 'role' => $role];
@@ -137,7 +119,6 @@ class UseAclRoleWithRestrictedGwsScopeTest extends Injectable
         $this->userEditPage->getUserForm()->fill($this->prepareUser($user, $role));
         $this->userEditPage->getFormPageActions()->save();
 
-        return ['storeGroups' => $this->storeGroups];
     }
 
     /**
@@ -151,21 +132,9 @@ class UseAclRoleWithRestrictedGwsScopeTest extends Injectable
     {
         $userData = $user->getData();
         $userData['role_id'] = ['role' => $role];
-        unset($userData['user_id']);
-        unset($userData['password_confirmation']);
+        unset($userData['user_id'], $userData['password'], $userData['password_confirmation']);
 
         return $this->fixtureFactory->createByCode('user', ['data' => $userData]);
     }
 
-    /**
-     * Delete all custom Store Groups after test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        $this->objectManager->create(
-            'Mage\Adminhtml\Test\TestStep\DeleteStoreGroupsStep',
-            ['storeGroups' => $this->storeGroups])->run();
-    }
 }

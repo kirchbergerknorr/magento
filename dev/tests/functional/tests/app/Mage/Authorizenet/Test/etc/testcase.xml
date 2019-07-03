@@ -21,7 +21,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
@@ -85,7 +85,7 @@
         <step name="createInvoice" module="Mage_Sales"/>
     </scenario>
 
-    <scenario name="CreateOnlineRefundForAuthorizenetDirectpostMethodTest" firstStep="setupConfiguration">
+    <scenario name="CreateOfflineRefundForAuthorizenetDirectpostMethodTest" firstStep="setupConfiguration">
         <step name="setupConfiguration" module="Mage_Core" next="createProducts"/>
         <step name="createProducts" module="Mage_Catalog" next="addProductsToTheCart"/>
         <step name="addProductsToTheCart" module="Mage_Checkout" next="proceedToCheckout"/>

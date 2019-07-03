@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Connect
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -34,6 +34,18 @@
 class Mage_Connect_Helper_Data extends Mage_Core_Helper_Data
 {
     /**
+     * Path to directory that contains XML packages definition
+     *
+     * @var string
+     */
+    protected $_localPackagesPath;
+
+    public function __construct()
+    {
+        $this->_localPackagesPath = Mage::getBaseDir('var') . DS . 'connect' . DS;
+    }
+
+    /**
      * Retrieve file system path for local extension packages
      * Return path with last directory separator
      *
@@ -41,7 +53,17 @@ class Mage_Connect_Helper_Data extends Mage_Core_Helper_Data
      */
     public function getLocalPackagesPath()
     {
-        return Mage::getBaseDir('var') . DS . 'connect' . DS;
+        return $this->_localPackagesPath;
+    }
+
+    /**
+     * Set file system path for local extension packages
+     *
+     */
+    public function setLocalPackagesPath($path)
+    {
+        $this->_localPackagesPath = $path;
+        return $this;
     }
 
     /**

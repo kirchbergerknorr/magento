@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -97,7 +97,7 @@ class AssertProductIsPresentOnCustomWebsite extends AbstractConstraint
 
         $product = $fixtureFactory->createByCode(
             'catalogProductSimple',
-            ['dataSet' => 'default', 'data' => ['website_ids' => ['websites' => [$this->website]]]]
+            ['dataset' => 'default', 'data' => ['website_ids' => ['websites' => [$this->website]]]]
         );
         $product->persist();
 
@@ -191,7 +191,7 @@ class AssertProductIsPresentOnCustomWebsite extends AbstractConstraint
             ]
         ];
 
-        $fixture = $fixtureFactory->createByCode('configData', ['data' => $data]);
+        $fixture = $fixtureFactory->createByCode('customConfigData', ['data' => $data]);
         $fixture->persist();
     }
 

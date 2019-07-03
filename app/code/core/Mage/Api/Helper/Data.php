@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Api
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -345,5 +345,48 @@ class Mage_Api_Helper_Data extends Mage_Core_Helper_Abstract
             $delimiter = ',';
             $conditionValue = explode($delimiter, $conditionValue);
         }
+    }
+
+    /**
+     * Get wsdl cache id
+     *
+     * @return string
+     */
+    public function getCacheId()
+    {
+        return 'wsdl_config_global_' . md5($this->getServiceUrl('*/*/*'));
+    }
+
+    /**
+     * Get service url
+     *
+     * @param string|null $routePath
+     * @param array|null $routeParams
+     * @param bool $htmlSpecialChars
+     * @return string
+     * @throws Zend_Uri_Exception
+     */
+    public function getServiceUrl($routePath = null, $routeParams = null, $htmlSpecialChars = false)
+    {
+        $request = Mage::app()->getRequest();
+
+        if (is_null($routeParams)) {
+            $routeParams = array();
+        }
+
+        $routeParams['_nosid'] = true;
+
+        /** @var Mage_Core_Model_Url $urlModel */
+        $urlModel = Mage::getSingleton('core/url');
+        $url = $urlModel->getUrl($routePath, $routeParams);
+        $uri = Zend_Uri_Http::fromString($url);
+        $uri->setHost($request->getHttpHost());
+        if (!$urlModel->getRouteFrontName()) {
+            $uri->setPath('/' . trim($request->getBasePath() . '/api.php', '/'));
+        } else {
+            $uri->setPath($request->getBaseUrl() . $request->getPathInfo());
+        }
+
+        return $htmlSpecialChars === true ? htmlspecialchars($uri) : (string)$uri;
     }
 }

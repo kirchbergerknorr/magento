@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -92,7 +92,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
     /**
      * Initialize message templates with translating
      *
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     protected function _initMessageTemplates()
     {
@@ -114,7 +114,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
      *
      * @param array $paths  All paths masks types.
      *                      E.g.: array('available' => array(...), 'protected' => array(...))
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     public function setPaths(array $paths)
     {
@@ -131,7 +131,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
      * Set protected paths masks
      *
      * @param array $paths
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     public function setProtectedPaths(array $paths)
     {
@@ -143,7 +143,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
      * Add protected paths masks
      *
      * @param string|array $path
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     public function addProtectedPath($path)
     {
@@ -169,7 +169,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
      * Set available paths masks
      *
      * @param array $paths
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     public function setAvailablePaths(array $paths)
     {
@@ -181,7 +181,7 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
      * Add available paths mask
      *
      * @param string|array $path
-     * @return Mage_Adminhtml_Model_Core_File_Validator_SavePath_Available
+     * @return Mage_Core_Model_File_Validator_AvailablePath
      */
     public function addAvailablePath($path)
     {
@@ -230,8 +230,16 @@ class Mage_Core_Model_File_Validator_AvailablePath extends Zend_Validate_Abstrac
         }
 
         //validation
+        $protectedExtensions = Mage::helper('core/data')->getProtectedFileExtensions();
         $value = str_replace(array('/', '\\'), DS, $this->_value);
         $valuePathInfo = pathinfo(ltrim($value, '\\/'));
+        $fileNameExtension = pathinfo($valuePathInfo['filename'], PATHINFO_EXTENSION);
+
+        if (in_array($fileNameExtension, $protectedExtensions)) {
+            $this->_error(self::NOT_AVAILABLE_PATH, $this->_value);
+            return false;
+        }
+
         if ($valuePathInfo['dirname'] == '.' || $valuePathInfo['dirname'] == DS) {
             $valuePathInfo['dirname'] = '';
         }

@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -37,7 +37,7 @@ class AssertAgreementTextPresent extends AbstractConstraint
     /**
      * Part of license agreement text.
      */
-    const LICENSE_AGREEMENT_TEXT = 'EDITION AGREEMENT';
+    const LICENSE_AGREEMENT_TEXT = 'Open Software License';
 
     /**
      * Assert that part of license agreement text is present on Terms & Agreement page.

@@ -21,20 +21,20 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
  -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
-    <testCase name="Mage\Authorizenet\Test\TestCase\CreateShipmentForAuthorizenetDirectpostMethodTest">
+    <testCase name="Mage\Authorizenet\Test\TestCase\CreateShipmentForAuthorizenetDirectpostMethodTest" summary="CreateShipmentForAuthorizenetDirectpostMethodTest">
         <variation name="CreateShipmentForAuthorizenetDirectpostMethodTestVariation1" method="test">
             <data name="description" xsi:type="string">Create full shipment for Authorize.net direct post</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
             <data name="configData" xsi:type="string">authorizenet_directpost</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
-            <data name="checkoutMethod" xsi:type="string">guest</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
+            <data name="checkoutMethod" xsi:type="string">register</data>
             <data name="customerPersist" xsi:type="string">no</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">authorizenet_directpost</data>
@@ -44,7 +44,7 @@
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_from" xsi:type="string">3</data>
             <data name="verifyData/totalQtyOrdered/shipments/0/total_qty_to" xsi:type="string">3</data>
             <data name="status" xsi:type="string">Processing</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
+            <data name="tag" xsi:type="string">payment_method:authorize_net_dp</data>
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentSuccessCreateMessage" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsTab" />
             <constraint name="Mage\Shipping\Test\Constraint\AssertShipmentInShipmentsGrid" />

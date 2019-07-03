@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Eav
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -87,6 +87,13 @@ abstract class Mage_Eav_Model_Entity_Attribute_Abstract extends Mage_Core_Model_
     protected $_dataTable                   = null;
 
     /**
+     * Attribute validation flag
+     *
+     * @var boolean
+     */
+    protected $_attributeValidationPassed   = false;
+
+    /**
      * Initialize resource model
      */
     protected function _construct()
@@ -119,6 +126,16 @@ abstract class Mage_Eav_Model_Entity_Attribute_Abstract extends Mage_Core_Model_
         $this->_afterLoad();
         Varien_Profiler::stop('_LOAD_ATTRIBUTE_BY_CODE__');
         return $this;
+    }
+
+    /**
+     * Mark current attribute as passed validation
+     *
+     * @return void
+     */
+    public function setAttributeValidationAsPassed()
+    {
+        $this->_attributeValidationPassed = true;
     }
 
     /**
@@ -383,7 +400,10 @@ abstract class Mage_Eav_Model_Entity_Attribute_Abstract extends Mage_Core_Model_
             $source = Mage::getModel($this->getSourceModel());
             if (!$source) {
                 throw Mage::exception('Mage_Eav',
-                    Mage::helper('eav')->__('Source model "%s" not found for attribute "%s"',$this->getSourceModel(), $this->getAttributeCode())
+                    Mage::helper('eav')->__('Source model "%s" not found for attribute "%s"',
+                        $this->getSourceModel(),
+                        $this->getAttributeCode()
+                    )
                 );
             }
             $this->_source = $source->setAttribute($this);
@@ -421,6 +441,16 @@ abstract class Mage_Eav_Model_Entity_Attribute_Abstract extends Mage_Core_Model_
             || $value === '' && ($attrType == 'int' || $attrType == 'decimal' || $attrType == 'datetime');
 
         return $isEmpty;
+    }
+
+    /**
+     * Check if attribute is valid
+     *
+     * @return boolean
+     */
+    public function isAttributeValidationPassed()
+    {
+        return $this->_attributeValidationPassed;
     }
 
     /**
@@ -628,8 +658,14 @@ abstract class Mage_Eav_Model_Entity_Attribute_Abstract extends Mage_Core_Model_
                     break;
                 }
                 $prop = $describe[$this->getAttributeCode()];
+                $type = $prop['DATA_TYPE'];
+                if (isset($prop['PRECISION']) && isset($prop['SCALE'])) {
+                    $type .= "({$prop['PRECISION']},{$prop['SCALE']})";
+                } else {
+                    $type .= (isset($prop['LENGTH']) && $prop['LENGTH']) ? "({$prop['LENGTH']})" : "";
+                }
                 $columns[$this->getAttributeCode()] = array(
-                    'type'      => $prop['DATA_TYPE'] . ($prop['LENGTH'] ? "({$prop['LENGTH']})" : ""),
+                    'type'      => $type,
                     'unsigned'  => $prop['UNSIGNED'] ? true: false,
                     'is_null'   => $prop['NULLABLE'],
                     'default'   => $prop['DEFAULT'],

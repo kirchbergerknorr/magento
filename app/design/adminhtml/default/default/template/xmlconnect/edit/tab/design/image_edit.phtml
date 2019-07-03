@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -50,7 +50,7 @@
                         <option value=""><?php echo $this->__('CMS Pages haven\'t been found.'); ?></option>
                     <?php endif;?>
                     <?php foreach ($pages as $page):?>
-                        <option value="<?php echo $page['value']; ?>"><?php echo $page['label']; ?></option>
+                        <option value="<?php echo $page['value']; ?>"><?php echo Mage::helper('core')->quoteEscape($page['label']); ?></option>
                     <?php endforeach;?>
                 </select>
             </div>

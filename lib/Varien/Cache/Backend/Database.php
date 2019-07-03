@@ -20,7 +20,7 @@
  *
  * @category    Varien
  * @package     Varien_Cache
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -478,7 +478,7 @@ class Varien_Cache_Backend_Database
             return $this->_getAdapter()->update(
                 $this->_getDataTable(),
                 array('expire_time'=>new Zend_Db_Expr('expire_time+'.$extraLifetime)),
-                array('id=?'=>$id, 'expire_time = 0 OR expire_time>'=>time())
+                array('id=?' => $id, 'expire_time = 0 OR expire_time>?' => time())
             );
         } else {
             return true;

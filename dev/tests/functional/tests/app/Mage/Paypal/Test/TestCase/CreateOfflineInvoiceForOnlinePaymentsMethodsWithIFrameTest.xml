@@ -21,27 +21,27 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
-    <testCase name="Mage\Paypal\Test\TestCase\CreateOfflineInvoiceForOnlinePaymentsMethodsWithIFrameTest">
+    <testCase name="Mage\Paypal\Test\TestCase\CreateOfflineInvoiceForOnlinePaymentsMethodsWithIFrameTest" summary="CreateOfflineInvoiceForOnlinePaymentsMethodsWithIFrameTest">
         <variation name="CreateOfflineInvoiceForOnlinePaymentsMethodsWithIFrameTestVariation1" method="test">
             <data name="description" xsi:type="string">Create full invoice with shipment for paypal payflow link</data>
             <data name="configData" xsi:type="string">paypal_payflow_link</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">payflow_link</data>
             <data name="payment/cc" xsi:type="string">for_iframe</data>
             <data name="payment/iframe" xsi:type="string">yes</data>
-            <data name="data/invoice/0/form_data/comment_text" xsi:type="string">comments for invoice</data>
             <data name="data/invoice/0/form_data/do_shipment" xsi:type="string">Yes</data>
+            <data name="data/invoice/0/form_data/comment_text" xsi:type="string">comments for invoice</data>
             <data name="data/invoice/0/form_data/capture_case" xsi:type="string">Capture Offline</data>
             <data name="verifyData/grandTotal/invoices/0/from" xsi:type="string">315.00</data>
             <data name="verifyData/grandTotal/invoices/0/to" xsi:type="string">315.00</data>
@@ -50,7 +50,7 @@
             <data name="verifyData/item_subtotal" xsi:type="string">300.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">300.00</data>
             <data name="status" xsi:type="string">Complete</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
+            <data name="tag" xsi:type="string">payment_method:paypal, paypal:payflow_link</data>
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceWithShipmentSuccessMessage" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />
@@ -63,10 +63,10 @@
             <data name="description" xsi:type="string">Create partial invoice for paypal advanced</data>
             <data name="configData" xsi:type="string">paypal_advanced</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">payflow_advanced</data>
@@ -82,11 +82,10 @@
             <data name="verifyData/item_subtotal" xsi:type="string">100.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">100.00</data>
             <data name="status" xsi:type="string">Processing</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
+            <data name="tag" xsi:type="string">payment_method:paypal, paypal:advanced</data>
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceSuccessCreateMessage" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />
-            <constraint name="Mage\Sales\Test\Constraint\AssertNoInvoiceButton" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceItems" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceItemsOnFrontend" />
             <constraint name="Mage\Sales\Test\Constraint\AssertOrderStatusIsCorrect" />
@@ -95,15 +94,16 @@
             <data name="description" xsi:type="string">Create full invoice for paypal advanced action sale</data>
             <data name="configData" xsi:type="string">paypal_advanced_action_sale</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">payflow_advanced</data>
             <data name="payment/cc" xsi:type="string">for_iframe</data>
             <data name="payment/iframe" xsi:type="string">yes</data>
+            <data name="action/invoice/0" xsi:type="boolean">false</data>
             <data name="data/invoice/0/form_data/comment_text" xsi:type="string">comments for invoice</data>
             <data name="data/invoice/0/form_data/capture_case" xsi:type="string">Capture Offline</data>
             <data name="verifyData/grandTotal/invoices/0/from" xsi:type="string">315.00</data>
@@ -111,9 +111,8 @@
             <data name="verifyData/item_price" xsi:type="string">100.00</data>
             <data name="verifyData/item_subtotal" xsi:type="string">300.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">300.00</data>
-            <data name="status" xsi:type="string">Complete</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
-            <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceSuccessCreateMessage" />
+            <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal, paypal:advanced</data>
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />
             <constraint name="Mage\Sales\Test\Constraint\AssertNoInvoiceButton" />
@@ -125,25 +124,27 @@
             <data name="description" xsi:type="string">Create full invoice for paypal hosted solution</data>
             <data name="configData" xsi:type="string">paypal_hosted_solution</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">hosted_pro</data>
             <data name="payment/cc" xsi:type="string">hosted_pro</data>
             <data name="payment/iframe" xsi:type="string">yes</data>
             <data name="data/invoice/0/form_data/comment_text" xsi:type="string">comments for invoice</data>
+            <data name="data/invoice/0/form_data/do_shipment" xsi:type="string">Yes</data>
             <data name="data/invoice/0/form_data/capture_case" xsi:type="string">Capture Offline</data>
             <data name="verifyData/grandTotal/invoices/0/from" xsi:type="string">315.00</data>
             <data name="verifyData/grandTotal/invoices/0/to" xsi:type="string">315.00</data>
+            <data name="verifyData/item_status" xsi:type="string">Shipped</data>
             <data name="verifyData/item_price" xsi:type="string">100.00</data>
             <data name="verifyData/item_subtotal" xsi:type="string">300.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">300.00</data>
             <data name="status" xsi:type="string">Complete</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
-            <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceSuccessCreateMessage" />
+            <data name="tag" xsi:type="string">payment_method:paypal, paypal:hosted_solution</data>
+            <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceWithShipmentSuccessMessage" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />
             <constraint name="Mage\Sales\Test\Constraint\AssertNoInvoiceButton" />
@@ -155,15 +156,16 @@
             <data name="description" xsi:type="string">Create full invoice for paypal hosted solution action sale</data>
             <data name="configData" xsi:type="string">paypal_hosted_solution_action_sale</data>
             <data name="products" xsi:type="string">catalogProductSimple::default</data>
-            <data name="customer/dataSet" xsi:type="string">default</data>
+            <data name="customer/dataset" xsi:type="string">default_frontend_new</data>
             <data name="checkoutMethod" xsi:type="string">login</data>
             <data name="customerPersist" xsi:type="string">yes</data>
-            <data name="billingAddress/dataSet" xsi:type="string">customer_US</data>
+            <data name="billingAddress/dataset" xsi:type="string">customer_US_login</data>
             <data name="shipping/shipping_service" xsi:type="string">Flat Rate</data>
             <data name="shipping/shipping_method" xsi:type="string">Fixed</data>
             <data name="payment/method" xsi:type="string">hosted_pro</data>
             <data name="payment/cc" xsi:type="string">hosted_pro</data>
             <data name="payment/iframe" xsi:type="string">yes</data>
+            <data name="action/invoice/0" xsi:type="boolean">false</data>
             <data name="data/invoice/0/form_data/comment_text" xsi:type="string">comments for invoice</data>
             <data name="data/invoice/0/form_data/capture_case" xsi:type="string">Capture Offline</data>
             <data name="verifyData/grandTotal/invoices/0/from" xsi:type="string">315.00</data>
@@ -171,9 +173,8 @@
             <data name="verifyData/item_price" xsi:type="string">100.00</data>
             <data name="verifyData/item_subtotal" xsi:type="string">300.00</data>
             <data name="verifyData/item_row_total" xsi:type="string">300.00</data>
-            <data name="status" xsi:type="string">Complete</data>
-            <data name="issue" xsi:type="string">Unskip after done TOOL-4060</data>
-            <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceSuccessCreateMessage" />
+            <data name="status" xsi:type="string">Processing</data>
+            <data name="tag" xsi:type="string">payment_method:paypal, paypal:hosted_solution</data>
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesGrid" />
             <constraint name="Mage\Sales\Test\Constraint\AssertInvoiceInInvoicesTab" />
             <constraint name="Mage\Sales\Test\Constraint\AssertNoInvoiceButton" />

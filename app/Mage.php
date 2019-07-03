@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -52,6 +52,9 @@ if (defined('COMPILER_INCLUDE_PATH')) {
 }
 
 Varien_Autoload::register();
+
+include_once "phpseclib/bootstrap.php";
+include_once "mcryptcompat/mcrypt.php";
 
 /**
  * Main Mage hub class
@@ -170,8 +173,8 @@ final class Mage
         return array(
             'major'     => '1',
             'minor'     => '9',
-            'revision'  => '2',
-            'patch'     => '0',
+            'revision'  => '4',
+            'patch'     => '2',
             'stability' => '',
             'number'    => '',
         );
@@ -805,11 +808,22 @@ final class Mage
         static $loggers = array();
 
         $level  = is_null($level) ? Zend_Log::DEBUG : $level;
-        $file = empty($file) ? 'system.log' : $file;
+        $file = empty($file) ?
+            (string) self::getConfig()->getNode('dev/log/file', Mage_Core_Model_Store::DEFAULT_CODE) : basename($file);
+
+        // Validate file extension before save. Allowed file extensions: log, txt, html, csv
+        $_allowedFileExtensions = explode(
+            ',',
+            (string) self::getConfig()->getNode('dev/log/allowedFileExtensions', Mage_Core_Model_Store::DEFAULT_CODE)
+        );
+        $logDir = self::getBaseDir('var') . DS . 'log';
+        $validatedFileExtension = pathinfo($file, PATHINFO_EXTENSION);
+        if (!$validatedFileExtension || !in_array($validatedFileExtension, $_allowedFileExtensions)) {
+            return;
+        }
 
         try {
             if (!isset($loggers[$file])) {
-                $logDir  = self::getBaseDir('var') . DS . 'log';
                 $logFile = $logDir . DS . $file;
 
                 if (!is_dir($logDir)) {
@@ -839,6 +853,7 @@ final class Mage
                 $message = print_r($message, true);
             }
 
+            $message = addcslashes($message, '<?');
             $loggers[$file]->log($message, $level);
         }
         catch (Exception $e) {

@@ -20,7 +20,7 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -41,6 +41,13 @@ class Main extends Block
     protected $title = '.page-head';
 
     /**
+     * Title text.
+     *
+     * @var string
+     */
+    protected $deployStatus = '#status';
+
+    /**
      * Get license text.
      *
      * @return string
@@ -48,5 +55,15 @@ class Main extends Block
     public function getTitle()
     {
         return $this->_rootElement->find($this->title)->getText();
+    }
+
+    /**
+     * Get license text.
+     *
+     * @return string
+     */
+    public function getDeployStatus()
+    {
+        return $this->_rootElement->find($this->deployStatus)->getText();
     }
 }

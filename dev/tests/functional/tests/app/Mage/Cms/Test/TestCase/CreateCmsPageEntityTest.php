@@ -20,14 +20,14 @@
  *
  * @category    Tests
  * @package     Tests_Functional
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 namespace Mage\Cms\Test\TestCase;
 
-use Magento\Mtf\TestCase\Injectable;
 use Mage\Cms\Test\Fixture\CmsPage;
+use Magento\Mtf\TestCase\Injectable;
 use Mage\Cms\Test\Page\Adminhtml\CmsPageIndex;
 use Mage\Cms\Test\Page\Adminhtml\CmsPageNew;
 use Mage\Adminhtml\Test\Page\Adminhtml\StoreIndex;
@@ -138,7 +138,7 @@ class CreateCmsPageEntityTest extends Injectable
      */
     public function tearDown()
     {
-        if (!$this->cms instanceof CmsPage) {
+        if (!$this->cms->hasData('store_id')) {
             return;
         }
         $stores = $this->cms->getStoreId();
@@ -148,7 +148,11 @@ class CreateCmsPageEntityTest extends Injectable
                 $this->storeIndex->open();
                 $this->storeIndex->getStoreGrid()->openStore($store);
                 $this->editStore->getFormPageActions()->delete();
-                $this->deleteStore->getFormPageActions()->delete();
+                $deleteStoreFormPageActions = $this->deleteStore->getFormPageActions();
+                if ($deleteStoreFormPageActions->isVisible()) {
+                    $this->deleteStore->getForm()->fillForm();
+                    $deleteStoreFormPageActions->delete();
+                }
             }
         }
     }
