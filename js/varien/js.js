@@ -773,6 +773,8 @@ function customFormSubmitToParent(url, parametersArray, method) {
 
 function buttonDisabler() {
     const buttons = document.querySelectorAll('button.save');
-    buttons.forEach(button => button.disabled = true);
+    // <snk: fix IE11 compatibility old good anonymous instead of arrow function
+    buttons.forEach(function (button) {return button.disabled = true});
+    // snk>
 }
 
