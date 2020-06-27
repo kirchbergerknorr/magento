@@ -1,0 +1,6 @@
+2020-06-27 11:09:08 UTC | SUPEE-11346_CE_1945 | CE_1.9.4.5 | v1 | 487ca1733e3f6e18b3e6244390875ea6d165c369 | Wed Jun 17 17:04:11 2020 +0000 | 62622ef08f2a4f51c8c1ecc3c435cbe7db4a6a5e..HEAD
+patching file app/code/core/Mage/Adminhtml/Block/Widget/Form.php
+patching file app/code/core/Mage/Adminhtml/controllers/Catalog/Product/AttributeController.php
+patching file app/code/core/Mage/Eav/Model/Attribute.php
+
+
